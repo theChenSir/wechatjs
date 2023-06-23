@@ -46,7 +46,7 @@
 
           <text style="position: absolute;bottom: 3px;left: 5px;font-size: 10px;color: darkgrey;width: 150px;text-align: center">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上次登录时间：
-            <br>{{item.lastTime.substring(0,19)}}
+            <br>{{item.lastTime.substring(3,25)}}
           </text>
         </n-card>
       </template>
@@ -138,6 +138,7 @@
     import type {MenuOption} from 'naive-ui'
     import {DropdownGroupOption, DropdownOption, NIcon, DataTableColumns} from 'naive-ui'
     import axios from "axios";
+    import date from "naive-ui/es/date-picker/src/panel/date";
 
 
     let adminInfo = reactive({
@@ -241,7 +242,7 @@
         }
     ])
     const pagination  = {pageSize: 4}
-    let dateFormat = 'yyyy-MM-dd\'T\'HH:mm:ss.SSSX'
+    let dateFormat = 'yyyy-MM-dd HH:mm:ss'
     const checkedRowKeysRef = ref<Array<string | number>>([])
     const columns: DataTableColumns<RowData> = [
         {
@@ -387,6 +388,7 @@
                     return e.lastTime
                 })
                 userList.value.forEach((e)=>{
+                    e.lastTime = new Date(Date.parse(e.lastTime)) + ''
                     if(e.status === 2 || e.status === '2'){
                         e.isPermit = true
                     }

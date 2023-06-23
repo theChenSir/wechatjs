@@ -20,14 +20,27 @@
         <template #password-invisible-icon>
           <n-icon :size="16" :component="Glasses"/>
         </template>
+
       </n-input>
 
 <!--      <n-button type="success" class="centerBut" @click="wxlogin">-->
 <!--        使用微信账号登录-->
 <!--      </n-button>-->
-      <n-button type="info" class="centerBut" style="position: absolute;left: 33%;top: 80%" @click="login">
+      <n-input
+              show-password-on="click"
+              placeholder="验证码"
+              :maxlength="8"
+              class="centerInput"
+              style="bottom:15%;width: 50%;left: 15%;position: absolute;"
+              round
+      >
+
+      </n-input>
+      <n-button type="info" class="centerBut" style="position: absolute;left: 33%;top: 90%" @click="login">
         登录
       </n-button>
+      <img @click="change"
+              :src="baseValue" style="position: fixed;right: 36%;bottom: 33%;width: 100px;height: 50px;z-index: 9">
 
     </div>
 
@@ -55,7 +68,7 @@
     import useStore from '../../store'
     import router from '../../router'
     import axios from "axios";
-    import {getCurrentInstance, ref,reactive} from 'vue';
+    import {getCurrentInstance, ref,reactive,onMounted} from 'vue';
 
     const useStore1 = useStore();
     const {getUserInfo} = storeToRefs(useStore1)
@@ -63,10 +76,27 @@
     let showModal = ref(false)
     let is_loading = ref(false)
     let loginImgSrc = ref('')
+    let baseValue = ref('')
     let userInfo = reactive({
         username:'',
         password:''
     })
+
+    onMounted(()=>{
+        axios.get("https://cchencs.top:8181/token/getImageCode").then(
+            (d)=>{
+                baseValue.value = 'data:image/gif;base64,' + d.data.data.base64
+            }
+        )
+    })
+
+    function change() {
+        axios.get("https://cchencs.top:8181/token/getImageCode").then(
+            (d)=>{
+                baseValue.value = 'data:image/gif;base64,' + d.data.data.base64
+            }
+        )
+    }
 
     function wxlogin() {
         is_loading.value = true
@@ -89,6 +119,7 @@
 
 
     function login() {
+
         if(!userInfo.username || !userInfo.password){
             window.$message.error("账号密码不能为空！")
             return;

@@ -294,7 +294,8 @@
         driveMode:'',
         oilBox:'',
         maxHeight:'',
-        type:''
+        type:'',
+        count:99,
     })
 
 
@@ -523,7 +524,7 @@
         axios.get("https://cchencs.top:8181/getAllCar").then(
             (d)=>{
                 carList.value.splice(0)
-                console.log(111)
+                // console.log(111)
                 let arr = []
                 d.data.data.forEach((e)=>{
                     if(e.status === 1){
@@ -532,7 +533,7 @@
                     }else if(e.status === 0){
                         carList.value.push(e)
                     }else{
-                        window.$message.error("未知订单错误")
+                        window.$message.error("未知错误")
                     }
                 })
                 carList.value = carList.value.concat(arr)
