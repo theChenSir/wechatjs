@@ -27,6 +27,7 @@
 <!--        使用微信账号登录-->
 <!--      </n-button>-->
       <n-input
+
               show-password-on="click"
               placeholder="验证码"
               :maxlength="8"
