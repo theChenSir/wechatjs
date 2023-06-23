@@ -37,7 +37,7 @@
 
       </n-input>
       <n-button type="info" class="centerBut" style="position: absolute;left: 33%;top: 90%" @click="login">
-        登录啊
+        登录
       </n-button>
       <img @click="change"
               :src="baseValue" style="position: fixed;right: 36%;bottom: 33%;width: 100px;height: 50px;z-index: 9">
